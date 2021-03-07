@@ -1,0 +1,12 @@
+# dependencies
+node_modules
+
+# related to build and deploy
+.serverless
+.build
+
+# environment variables
+env
+
+# code coverage test output
+.nyc_output
