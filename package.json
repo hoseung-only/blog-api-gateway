@@ -7,7 +7,7 @@
     "start": "serverless offline",
     "remove": "serverless remove",
     "format": "prettier --write 'src/**/*.ts'",
-    "test": "mocha --require ts-node/register --exit -t 5000 src/**/__test__/*.spec.ts",
+    "test": "ADMIN_EMAIL=asdf@asdf.com ADMIN_PASSWORD=asdf JWT_SECRET_KEY=asdf mocha --require ts-node/register --exit -t 5000 src/**/__test__/*.spec.ts",
     "coverage": "nyc --exclude='src/**/__test__' npm run test",
     "coverage:summary": "nyc --exclude='src/**/__test__' --reporter=text-summary npm run test"
   },
