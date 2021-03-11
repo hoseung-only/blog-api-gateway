@@ -6,7 +6,11 @@ export class AuthService {
   }
 
   public static verifyJWT(token: string) {
-    return JWT.verify(token, process.env.JWT_SECRET_KEY!);
+    try {
+      return JWT.verify(token, process.env.JWT_SECRET_KEY!);
+    } catch (error) {
+      return null;
+    }
   }
 
   public static verifyAdmin({
