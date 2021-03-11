@@ -5,7 +5,7 @@ provider:
   runtime: nodejs12.x
   region: ap-northeast-2
   stage: prod
-  environments: ${file(./env/jwt.yml)}
+  environments: ${file(./env/env.yml)}
   apiGateway:
     shouldStartNameWithService: true
   lambdaHashingVersion: 20201221
