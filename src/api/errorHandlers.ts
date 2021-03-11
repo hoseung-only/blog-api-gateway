@@ -1,5 +1,7 @@
 import { Router, RequestHandler, ErrorRequestHandler } from "express";
 
+import { ResponseError } from "@hoseung-only/blog-microservice-sdk";
+
 import { ErrorResponse } from "../utils/error";
 
 export const applyErrorHandlers = (rootRouter: Router) => {
@@ -10,6 +12,10 @@ export const applyErrorHandlers = (rootRouter: Router) => {
 
   const serverError: ErrorRequestHandler = (err, req, res, next) => {
     if (err instanceof ErrorResponse) {
+      return res.status(err.statusCode).json({
+        message: err.message,
+      });
+    } else if (err instanceof ResponseError) {
       return res.status(err.statusCode).json({
         message: err.message,
       });
