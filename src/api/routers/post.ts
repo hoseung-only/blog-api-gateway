@@ -33,7 +33,7 @@ export const applyPostRouters = (rootRouter: Router) => {
       try {
         const id = Number(req.params.id);
 
-        const response = await client.post.getPost({id});
+        const response = await client.post.getPost({ id });
 
         return res.status(200).json(response);
       } catch (error) {
@@ -66,7 +66,11 @@ export const applyPostRouters = (rootRouter: Router) => {
         const content = req.body.content as string;
         const categoryId = Number(req.body.categoryId);
 
-        const response = await client.post.createPost({ title, content, categoryId });
+        const response = await client.post.createPost({
+          title,
+          content,
+          categoryId,
+        });
 
         return res.status(201).json(response);
       } catch (error) {
@@ -87,7 +91,7 @@ export const applyPostRouters = (rootRouter: Router) => {
       try {
         const ids = req.body.ids as number[];
 
-        const response = await client.post.deletePostsByIds({ids});
+        const response = await client.post.deletePostsByIds({ ids });
 
         return res.status(200).json(response);
       } catch (error) {

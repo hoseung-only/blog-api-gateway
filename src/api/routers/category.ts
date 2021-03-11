@@ -25,7 +25,7 @@ export const applyCategoryRouters = (rootRouter: Router) => {
         const name = req.body.name as string;
         const parentId = (req.body.parentId as number) || undefined;
 
-        const response = await client.post.createCategory({  name, parentId });
+        const response = await client.post.createCategory({ name, parentId });
 
         return res.status(201).json(response);
       } catch (error) {
@@ -38,9 +38,7 @@ export const applyCategoryRouters = (rootRouter: Router) => {
     try {
       const response = await client.post.getAllCategory();
 
-      return res
-        .status(200)
-        .json(response);
+      return res.status(200).json(response);
     } catch (error) {
       return next(error);
     }
