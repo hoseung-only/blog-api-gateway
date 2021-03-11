@@ -18,7 +18,7 @@ export const applyPostRouters = (rootRouter: Router) => {
 
         const response = await client.post.getPostList({ cursor });
 
-        return res.status(200).json(response);
+        return res.status(response.statusCode).json(response.body);
       } catch (error) {
         return next(error);
       }
@@ -35,7 +35,7 @@ export const applyPostRouters = (rootRouter: Router) => {
 
         const response = await client.post.getPost({ id });
 
-        return res.status(200).json(response);
+        return res.status(response.statusCode).json(response.body);
       } catch (error) {
         return next(error);
       }
@@ -72,7 +72,7 @@ export const applyPostRouters = (rootRouter: Router) => {
           categoryId,
         });
 
-        return res.status(201).json(response);
+        return res.status(response.statusCode).json(response.body);
       } catch (error) {
         return next(error);
       }
@@ -93,7 +93,7 @@ export const applyPostRouters = (rootRouter: Router) => {
 
         const response = await client.post.deletePostsByIds({ ids });
 
-        return res.status(200).json(response);
+        return res.status(response.statusCode).json(response.body);
       } catch (error) {
         return next(error);
       }

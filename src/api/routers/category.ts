@@ -27,7 +27,7 @@ export const applyCategoryRouters = (rootRouter: Router) => {
 
         const response = await client.post.createCategory({ name, parentId });
 
-        return res.status(201).json(response);
+        return res.status(response.statusCode).json(response.body);
       } catch (error) {
         return next(error);
       }
@@ -38,7 +38,7 @@ export const applyCategoryRouters = (rootRouter: Router) => {
     try {
       const response = await client.post.getAllCategory();
 
-      return res.status(200).json(response);
+      return res.status(response.statusCode).json(response.body);
     } catch (error) {
       return next(error);
     }
@@ -58,7 +58,7 @@ export const applyCategoryRouters = (rootRouter: Router) => {
 
         const response = await client.post.deleteCategoriesByIds({ ids });
 
-        return res.status(200).json(response);
+        return res.status(response.statusCode).json(response.body);
       } catch (error) {
         return next(error);
       }
