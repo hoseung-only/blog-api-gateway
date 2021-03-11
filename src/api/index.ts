@@ -1,12 +1,14 @@
 import { Router } from "express";
 
-import { applyHelloworldRouters } from "./routers/helloworld";
+import { applyPostRouters } from "./routers/post";
+import { applyCategoryRouters } from "./routers/category";
 import { applyErrorHandlers } from "./errorHandlers";
 
 export const getRootRouter = () => {
   const router = Router();
 
-  applyHelloworldRouters(router);
+  applyPostRouters(router);
+  applyCategoryRouters(router);
   applyErrorHandlers(router);
 
   return router;
