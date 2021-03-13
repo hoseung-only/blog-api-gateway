@@ -3,6 +3,7 @@ import { body } from "express-validator";
 
 import { client } from "@hoseung-only/blog-microservice-sdk";
 
+import { authenticate } from "../middlewares/authenticate";
 import { validateParameters } from "../middlewares/validateParameters";
 
 export const applyCategoryRouters = (rootRouter: Router) => {
@@ -10,6 +11,7 @@ export const applyCategoryRouters = (rootRouter: Router) => {
 
   router.post(
     "/",
+    authenticate,
     body("name")
       .isString()
       .withMessage("name must be string")
@@ -46,6 +48,7 @@ export const applyCategoryRouters = (rootRouter: Router) => {
 
   router.delete(
     "/",
+    authenticate,
     body("ids")
       .isArray()
       .withMessage("ids must be number array")
