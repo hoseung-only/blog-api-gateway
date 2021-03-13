@@ -21,8 +21,8 @@ export class AuthService {
     password: string;
   }) {
     return (
-      email === process.env.ADMIN_EMAIL &&
-      password === process.env.ADMIN_PASSWORD
+      email === process.env.ADMIN_EMAIL! &&
+      password === process.env.ADMIN_PASSWORD!
     );
   }
 }
