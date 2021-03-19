@@ -29,10 +29,10 @@ export const applySessionRouters = (rootRouter: Router) => {
         const email = req.body.email as string;
         const password = req.body.password as string;
 
-        const isValidAccount = AuthService.verifyAdmin({ email, password });
+        const isValidAccount = AuthService.verifyAccount({ email, password });
 
         if (!isValidAccount) {
-          throw new ErrorResponse(401, "invalid account information");
+          throw new ErrorResponse(401, "invalid account");
         }
 
         const token = AuthService.createJWT();

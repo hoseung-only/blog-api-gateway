@@ -13,7 +13,7 @@ export class AuthService {
     }
   }
 
-  public static verifyAdmin({
+  public static verifyAccount({
     email,
     password,
   }: {
