@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { body } from "express-validator";
+import { body, param } from "express-validator";
 
 import { client } from "@hoseung-only/blog-microservice-sdk";
 
@@ -47,19 +47,17 @@ export const applyCategoryRouters = (rootRouter: Router) => {
   });
 
   router.delete(
-    "/",
+    "/:id",
     authenticate,
-    body("ids")
-      .isArray()
-      .withMessage("ids must be number array")
-      .isLength({ min: 1 })
-      .withMessage("ids must have at least 1 element"),
+    param("id")
+      .isNumeric()
+      .withMessage("ids must be number"),
     validateParameters,
     async (req, res, next) => {
       try {
-        const ids = req.body.ids as number[];
+        const id = Number(req.params.id);
 
-        const response = await client.post.deleteCategoriesByIds({ ids });
+        const response = await client.post.deleteCategoryById({ id });
 
         return res.status(response.statusCode).json(response.body);
       } catch (error) {
