@@ -58,27 +58,20 @@ export const openAPISpec: OpenAPIObject = {
           },
         },
       },
+    },
+    "/categories/{id}": {
       delete: {
-        operationId: "deleteCategory",
-        requestBody: {
-          required: true,
-          content: {
-            "application/json": {
-              schema: {
-                type: "object",
-                properties: {
-                  ids: {
-                    type: "array",
-                    items: {
-                      type: "number",
-                    },
-                  },
-                },
-                required: ["ids"],
-              },
+        operationId: "deleteCategoryById",
+        parameters: [
+          {
+            required: true,
+            name: "id",
+            in: "path",
+            schema: {
+              type: "number",
             },
           },
-        },
+        ],
         responses: {
           200: {
             description: "success",
@@ -96,13 +89,16 @@ export const openAPISpec: OpenAPIObject = {
     "/posts": {
       get: {
         operationId: "getPostsByCursor",
-        parameters: {
-          name: "cursor",
-          in: "query",
-          schema: {
-            type: "number",
+        parameters: [
+          {
+            required: false,
+            name: "cursor",
+            in: "query",
+            schema: {
+              type: "number",
+            },
           },
-        },
+        ],
         responses: {
           200: {
             description: "success",
@@ -150,51 +146,20 @@ export const openAPISpec: OpenAPIObject = {
           },
         },
       },
-      delete: {
-        operationId: "deletePost",
-        requestBody: {
-          required: true,
-          content: {
-            "application/json": {
-              schema: {
-                type: "object",
-                properties: {
-                  ids: {
-                    type: "array",
-                    items: {
-                      type: "number",
-                    },
-                  },
-                },
-                required: ["ids"],
-              },
-            },
-          },
-        },
-        responses: {
-          200: {
-            description: "success",
-            content: {
-              "application/json": {
-                schema: {
-                  $ref: "#/components/schemas/SuccessShow",
-                },
-              },
-            },
-          },
-        },
-      },
     },
     "/posts/{id}": {
       get: {
         operationId: "getPost",
-        parameters: {
-          name: "id",
-          in: "path",
-          schema: {
-            type: "number",
+        parameters: [
+          {
+            required: true,
+            name: "id",
+            in: "path",
+            schema: {
+              type: "number",
+            },
           },
-        },
+        ],
         responses: {
           200: {
             description: "success",
@@ -202,6 +167,31 @@ export const openAPISpec: OpenAPIObject = {
               "application/json": {
                 schema: {
                   $ref: "#/components/schemas/PostShow",
+                },
+              },
+            },
+          },
+        },
+      },
+      delete: {
+        operationId: "deletePostById",
+        parameters: [
+          {
+            required: true,
+            name: "id",
+            in: "path",
+            schema: {
+              type: "number",
+            },
+          },
+        ],
+        responses: {
+          200: {
+            description: "success",
+            content: {
+              "application/json": {
+                schema: {
+                  $ref: "#/components/schemas/SuccessShow",
                 },
               },
             },
@@ -335,18 +325,12 @@ export const openAPISpec: OpenAPIObject = {
           posts: {
             type: "array",
             items: {
-              $ref: "#components/schemas/PostShow",
+              $ref: "#/components/schemas/PostShow",
             },
           },
           nextSursor: {
-            anyOf: [
-              {
-                type: "number",
-              },
-              {
-                type: "null",
-              },
-            ],
+            type: "number",
+            nullable: true,
           },
         },
         required: ["posts", "nextCursor"],
