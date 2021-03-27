@@ -84,9 +84,7 @@ export const applyPostRouters = (rootRouter: Router) => {
   router.delete(
     "/:id",
     authenticate,
-    param("id")
-      .isNumeric()
-      .withMessage("ids must be number"),
+    param("id").isNumeric().withMessage("id must be number"),
     validateParameters,
     async (req, res, next) => {
       try {
