@@ -1,6 +1,6 @@
 import * as express from "express";
 
-import { getRootRouter } from "./api";
+import { applyAllRouters } from "./api";
 
 export class App {
   private app: express.Application;
@@ -9,10 +9,13 @@ export class App {
     this.app = express();
 
     this.app.use(express.json());
-    this.app.use("/", getRootRouter());
+
+    applyAllRouters(this.app);
   }
 
-  public getApplication = () => this.app;
+  public getApplication() {
+    return this.app;
+  }
 }
 
 export const app = new App().getApplication();
