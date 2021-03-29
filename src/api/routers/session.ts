@@ -8,7 +8,7 @@ import { AuthService } from "../../services/auth";
 import * as Presenters from "../presenters";
 import { ErrorResponse } from "../../utils/error";
 
-export const applySessionRouters = (rootRouter: Router) => {
+export function applySessionRouters(rootRouter: Router) {
   const router = Router();
 
   router.post(
@@ -45,4 +45,4 @@ export const applySessionRouters = (rootRouter: Router) => {
   );
 
   rootRouter.use("/sessions", router);
-};
+}

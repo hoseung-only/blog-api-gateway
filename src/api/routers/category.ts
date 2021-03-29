@@ -6,7 +6,7 @@ import { client } from "@hoseung-only/blog-microservice-sdk";
 import { authenticate } from "../middlewares/authenticate";
 import { validateParameters } from "../middlewares/validateParameters";
 
-export const applyCategoryRouters = (rootRouter: Router) => {
+export function applyCategoryRouters(rootRouter: Router) {
   const router = Router();
 
   router.post(
@@ -65,4 +65,4 @@ export const applyCategoryRouters = (rootRouter: Router) => {
   );
 
   rootRouter.use("/categories", router);
-};
+}

@@ -6,7 +6,7 @@ import { client } from "@hoseung-only/blog-microservice-sdk";
 import { authenticate } from "../middlewares/authenticate";
 import { validateParameters } from "../middlewares/validateParameters";
 
-export const applyPostRouters = (rootRouter: Router) => {
+export function applyPostRouters(rootRouter: Router) {
   const router = Router();
 
   router.get(
@@ -100,4 +100,4 @@ export const applyPostRouters = (rootRouter: Router) => {
   );
 
   rootRouter.use("/posts", router);
-};
+}

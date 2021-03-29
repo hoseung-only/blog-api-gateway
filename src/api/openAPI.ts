@@ -348,7 +348,7 @@ export const openAPISpec: OpenAPIObject = {
   },
 };
 
-export const applyOpenAPIRouter = (rootRouter: Router) => {
+export function applyOpenAPIRouter(rootRouter: Router) {
   const router = Router();
 
   router.get("/", (req, res) => {
@@ -356,4 +356,4 @@ export const applyOpenAPIRouter = (rootRouter: Router) => {
   });
 
   rootRouter.use("/openapi", router);
-};
+}

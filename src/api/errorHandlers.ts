@@ -4,7 +4,7 @@ import { ResponseError } from "@hoseung-only/blog-microservice-sdk";
 
 import { ErrorResponse } from "../utils/error";
 
-export const applyErrorHandlers = (rootRouter: Router) => {
+export function applyErrorHandlers(rootRouter: Router) {
   const notFound: RequestHandler = (req, res, next) => {
     const err = new ErrorResponse(404, "Not Found");
     return next(err);
@@ -28,4 +28,4 @@ export const applyErrorHandlers = (rootRouter: Router) => {
 
   rootRouter.use(notFound);
   rootRouter.use(serverError);
-};
+}
