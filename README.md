@@ -1,5 +1,7 @@
 # api-gateway
 
+API gateway for my personal blog
+
 ## Test
 
 Run test script
