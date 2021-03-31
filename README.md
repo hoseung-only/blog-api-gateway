@@ -2,6 +2,11 @@
 
 ## Test
 
+Run test script
+```
+npm run test
+```
+
 ## References
 
 - [백엔드 아키텍처](https://miro.com/app/board/o9J_laTyd80=/)
