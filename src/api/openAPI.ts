@@ -328,7 +328,7 @@ export const openAPISpec: OpenAPIObject = {
               $ref: "#/components/schemas/PostShow",
             },
           },
-          nextSursor: {
+          nextCursor: {
             type: "number",
             nullable: true,
           },
