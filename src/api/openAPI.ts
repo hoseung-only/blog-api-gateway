@@ -322,7 +322,7 @@ export const openAPISpec: OpenAPIObject = {
       PostListShow: {
         type: "object",
         properties: {
-          posts: {
+          data: {
             type: "array",
             items: {
               $ref: "#/components/schemas/PostShow",
