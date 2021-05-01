@@ -121,14 +121,17 @@ export const openAPISpec: OpenAPIObject = {
               schema: {
                 type: "object",
                 properties: {
-                  ids: {
-                    type: "array",
-                    items: {
-                      type: "number",
-                    },
+                  title: {
+                    type: "string",
+                  },
+                  content: {
+                    type: "string",
+                  },
+                  categoryId: {
+                    type: "number",
                   },
                 },
-                required: ["ids"],
+                required: ["title", "content", "categoryId"],
               },
             },
           },
