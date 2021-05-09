@@ -60,6 +60,50 @@ export const openAPISpec: OpenAPIObject = {
       },
     },
     "/categories/{id}": {
+      put: {
+        operationId: "editCategory",
+        parameters: [
+          {
+            required: true,
+            name: "id",
+            in: "path",
+            schema: {
+              type: "number",
+            },
+          },
+        ],
+        requestBody: {
+          required: true,
+          content: {
+            "application/json": {
+              schema: {
+                type: "object",
+                properties: {
+                  name: {
+                    type: "string",
+                  },
+                  parentId: {
+                    type: "number",
+                  },
+                },
+                required: ["name"],
+              },
+            },
+          },
+        },
+        responses: {
+          200: {
+            description: "success",
+            content: {
+              "application/json": {
+                schema: {
+                  $ref: "#/components/schemas/CategoryShow",
+                },
+              },
+            },
+          },
+        },
+      },
       delete: {
         operationId: "deleteCategoryById",
         parameters: [
