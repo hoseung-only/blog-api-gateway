@@ -175,7 +175,7 @@ export const openAPISpec: OpenAPIObject = {
                     type: "number",
                   },
                 },
-                required: ["title", "content", "categoryId"],
+                required: ["title", "content"],
               },
             },
           },
@@ -207,6 +207,53 @@ export const openAPISpec: OpenAPIObject = {
             },
           },
         ],
+        responses: {
+          200: {
+            description: "success",
+            content: {
+              "application/json": {
+                schema: {
+                  $ref: "#/components/schemas/PostShow",
+                },
+              },
+            },
+          },
+        },
+      },
+      put: {
+        operationId: "editPost",
+        parameters: [
+          {
+            required: true,
+            name: "id",
+            in: "path",
+            schema: {
+              type: "number",
+            },
+          },
+        ],
+        requestBody: {
+          required: true,
+          content: {
+            "application/json": {
+              schema: {
+                type: "object",
+                properties: {
+                  title: {
+                    type: "string",
+                  },
+                  content: {
+                    type: "string",
+                  },
+                  categoryId: {
+                    type: "number",
+                  },
+                },
+                required: ["title", "content"],
+              },
+            },
+          },
+        },
         responses: {
           200: {
             description: "success",
@@ -296,6 +343,7 @@ export const openAPISpec: OpenAPIObject = {
           },
           parentId: {
             type: "number",
+            nullable: true,
           },
         },
         required: ["id", "name"],
@@ -359,6 +407,7 @@ export const openAPISpec: OpenAPIObject = {
           },
           categoryId: {
             type: "number",
+            nullable: true,
           },
           createdAt: {
             type: "number",

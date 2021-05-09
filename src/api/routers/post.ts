@@ -81,6 +81,48 @@ export function applyPostRouters(rootRouter: Router) {
     }
   );
 
+
+  router.put(
+    "/:id",
+    authenticate,
+    param("id").isNumeric()
+    .withMessage("categoryId must be number"),
+    body("title")
+      .isString()
+      .withMessage("title must be string")
+      .exists()
+      .withMessage("title must be provided"),
+    body("content")
+      .isString()
+      .withMessage("content must be string")
+      .exists()
+      .withMessage("title must be provided"),
+    body("categoryId")
+      .isNumeric()
+      .withMessage("categoryId must be number")
+      .optional(),
+    validateParameters,
+    async (req, res, next) => {
+      try {
+        const id = Number(req.params.id);
+        const title = req.body.title as string;
+        const content = req.body.content as string;
+        const categoryId = req.body.categoryId as number | undefined;
+
+        const response = await client.post.editPost({
+          id,
+          title,
+          content,
+          categoryId,
+        });
+
+        return res.status(response.statusCode).json(response.body);
+      } catch (error) {
+        return next(error);
+      }
+    }
+  );
+
   router.delete(
     "/:id",
     authenticate,
