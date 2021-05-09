@@ -380,7 +380,7 @@ export const openAPISpec: OpenAPIObject = {
             nullable: true,
           },
         },
-        required: ["posts", "nextCursor"],
+        required: ["data", "nextCursor"],
       },
       SessionShow: {
         type: "object",
