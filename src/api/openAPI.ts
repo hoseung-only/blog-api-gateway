@@ -36,8 +36,8 @@ export const openAPISpec: OpenAPIObject = {
                   name: {
                     type: "string",
                   },
-                  parantId: {
-                    type: "string",
+                  parentId: {
+                    type: "number",
                   },
                 },
                 required: ["name"],
