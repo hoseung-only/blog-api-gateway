@@ -323,7 +323,7 @@ export const openAPISpec: OpenAPIObject = {
                         type: "number",
                       },
                       name: {
-                        type: "number",
+                        type: "string",
                       },
                     },
                     required: ["id", "name"],
