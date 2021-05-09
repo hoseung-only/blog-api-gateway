@@ -48,6 +48,7 @@ export function applyCategoryRouters(rootRouter: Router) {
 
   router.put(
     "/:id",
+    authenticate,
     param("id").isNumeric().withMessage("id must be number"),
     body("name")
       .isString()
