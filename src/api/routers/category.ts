@@ -46,6 +46,34 @@ export function applyCategoryRouters(rootRouter: Router) {
     }
   });
 
+  router.put(
+    "/:id",
+    param("id").isNumeric().withMessage("id must be number"),
+    body("name")
+      .isString()
+      .withMessage("name must be string")
+      .exists()
+      .withMessage("name must be provided"),
+    body("parentId")
+      .isNumeric()
+      .withMessage("parentId must be number")
+      .optional(),
+    validateParameters,
+    async (req, res, next) => {
+      try {
+        const id = Number(req.params.id);
+        const name = req.body.name as string;
+        const parentId = req.body.parentId as number | undefined;
+
+        const response = await client.post.editCategory({ id, name, parentId });
+
+        return res.status(response.statusCode).json(response.body);
+      } catch (error) {
+        return next(error);
+      }
+    }
+  );
+
   router.delete(
     "/:id",
     authenticate,
