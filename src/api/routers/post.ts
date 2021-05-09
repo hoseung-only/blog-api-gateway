@@ -65,7 +65,7 @@ export function applyPostRouters(rootRouter: Router) {
       try {
         const title = req.body.title as string;
         const content = req.body.content as string;
-        const categoryId = Number(req.body.categoryId);
+        const categoryId = req.body.categoryId as number | undefined;
 
         const response = await client.post.createPost({
           title,
