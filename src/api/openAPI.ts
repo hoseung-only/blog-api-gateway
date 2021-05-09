@@ -130,6 +130,41 @@ export const openAPISpec: OpenAPIObject = {
         },
       },
     },
+    "/categories/{id}/posts": {
+      get: {
+        operationId: "getCategoryPostsByCursor",
+        parameters: [
+          {
+            required: true,
+            name: "id",
+            in: "path",
+            schema: {
+              type: "number",
+            },
+          },
+          {
+            required: false,
+            name: "cursor",
+            in: "query",
+            schema: {
+              type: "number",
+            },
+          },
+        ],
+        responses: {
+          200: {
+            description: "success",
+            content: {
+              "application/json": {
+                schema: {
+                  $ref: "#/components/schemas/PostListShow",
+                },
+              },
+            },
+          },
+        },
+      },
+    },
     "/posts": {
       get: {
         operationId: "getPostsByCursor",
