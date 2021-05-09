@@ -40,7 +40,7 @@ export const openAPISpec: OpenAPIObject = {
                     type: "string",
                   },
                 },
-                required: ["name", "parantId"],
+                required: ["name"],
               },
             },
           },
