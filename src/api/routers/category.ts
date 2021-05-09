@@ -38,7 +38,7 @@ export function applyCategoryRouters(rootRouter: Router) {
 
   router.get("/", async (req, res, next) => {
     try {
-      const response = await client.post.getAllCategory();
+      const response = await client.post.getAllCategories();
 
       return res.status(response.statusCode).json(response.body);
     } catch (error) {

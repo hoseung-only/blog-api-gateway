@@ -17,7 +17,7 @@ export function applyPostRouters(rootRouter: Router) {
       try {
         const cursor = req.query.cursor ? Number(req.query.cursor) : 0;
 
-        const response = await client.post.getPostList({ cursor });
+        const response = await client.post.getPostsByCursor({ cursor });
 
         return res.status(response.statusCode).json(response.body);
       } catch (error) {
@@ -80,12 +80,10 @@ export function applyPostRouters(rootRouter: Router) {
     }
   );
 
-
   router.put(
     "/:id",
     authenticate,
-    param("id").isNumeric()
-    .withMessage("categoryId must be number"),
+    param("id").isNumeric().withMessage("categoryId must be number"),
     body("title")
       .isString()
       .withMessage("title must be string")
