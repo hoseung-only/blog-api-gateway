@@ -346,7 +346,7 @@ export const openAPISpec: OpenAPIObject = {
             nullable: true,
           },
         },
-        required: ["id", "name"],
+        required: ["id", "name", "parentId"],
       },
       AllCategoriesShow: {
         type: "object",
