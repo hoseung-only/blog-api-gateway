@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { body, param } from "express-validator";
+import { body, param, query } from "express-validator";
 
 import { client } from "@hoseung-only/blog-microservice-sdk";
 
@@ -67,6 +67,28 @@ export function applyCategoryRouters(rootRouter: Router) {
         const parentId = req.body.parentId as number | undefined;
 
         const response = await client.post.editCategory({ id, name, parentId });
+
+        return res.status(response.statusCode).json(response.body);
+      } catch (error) {
+        return next(error);
+      }
+    }
+  );
+
+  router.get(
+    "/:id/posts",
+    param("id").isNumeric().withMessage("id must be number"),
+    query("cursor").isNumeric().withMessage("cursor must be number").optional(),
+    validateParameters,
+    async (req, res, next) => {
+      try {
+        const cursor = req.query.cursor ? Number(req.query.cursor) : 0;
+        const categoryId = Number(req.params.id);
+
+        const response = await client.post.getCategoryPostsByCursor({
+          cursor,
+          categoryId,
+        });
 
         return res.status(response.statusCode).json(response.body);
       } catch (error) {
