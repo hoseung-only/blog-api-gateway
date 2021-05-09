@@ -55,7 +55,7 @@ export function applyPostRouters(rootRouter: Router) {
       .isString()
       .withMessage("content must be string")
       .exists()
-      .withMessage("title must be provided"),
+      .withMessage("content must be provided"),
     body("categoryId")
       .isNumeric()
       .withMessage("categoryId must be number")
