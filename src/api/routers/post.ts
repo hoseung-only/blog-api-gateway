@@ -59,8 +59,7 @@ export function applyPostRouters(rootRouter: Router) {
     body("categoryId")
       .isNumeric()
       .withMessage("categoryId must be number")
-      .exists()
-      .withMessage("categoryId must be provided"),
+      .optional(),
     validateParameters,
     async (req, res, next) => {
       try {
