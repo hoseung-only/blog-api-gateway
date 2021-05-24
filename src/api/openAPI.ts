@@ -203,6 +203,9 @@ export const openAPISpec: OpenAPIObject = {
                   title: {
                     type: "string",
                   },
+                  coverImageURL: {
+                    type: "string",
+                  },
                   content: {
                     type: "string",
                   },
@@ -275,6 +278,9 @@ export const openAPISpec: OpenAPIObject = {
                 type: "object",
                 properties: {
                   title: {
+                    type: "string",
+                  },
+                  coverImageURL: {
                     type: "string",
                   },
                   content: {
@@ -437,6 +443,10 @@ export const openAPISpec: OpenAPIObject = {
           title: {
             type: "string",
           },
+          coverImageURL: {
+            type: "string",
+            nullable: true,
+          },
           content: {
             type: "string",
           },
@@ -448,7 +458,14 @@ export const openAPISpec: OpenAPIObject = {
             type: "number",
           },
         },
-        required: ["id", "title", "content", "categoryId", "createdAt"],
+        required: [
+          "id",
+          "title",
+          "coverImageURL",
+          "content",
+          "categoryId",
+          "createdAt",
+        ],
       },
       PostListShow: {
         type: "object",

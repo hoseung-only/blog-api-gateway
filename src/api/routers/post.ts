@@ -51,6 +51,10 @@ export function applyPostRouters(rootRouter: Router) {
       .withMessage("title must be string")
       .exists()
       .withMessage("title must be provided"),
+    body("coverImageURL")
+      .isNumeric()
+      .withMessage("coverImageURL must be string")
+      .optional(),
     body("content")
       .isString()
       .withMessage("content must be string")
@@ -64,11 +68,13 @@ export function applyPostRouters(rootRouter: Router) {
     async (req, res, next) => {
       try {
         const title = req.body.title as string;
+        const coverImageURL = req.body.coverImageURL as string | undefined;
         const content = req.body.content as string;
         const categoryId = req.body.categoryId as number | undefined;
 
         const response = await client.post.createPost({
           title,
+          coverImageURL,
           content,
           categoryId,
         });
@@ -89,6 +95,10 @@ export function applyPostRouters(rootRouter: Router) {
       .withMessage("title must be string")
       .exists()
       .withMessage("title must be provided"),
+    body("coverImageURL")
+      .isNumeric()
+      .withMessage("coverImageURL must be string")
+      .optional(),
     body("content")
       .isString()
       .withMessage("content must be string")
@@ -103,12 +113,14 @@ export function applyPostRouters(rootRouter: Router) {
       try {
         const id = Number(req.params.id);
         const title = req.body.title as string;
+        const coverImageURL = req.body.coverImageURL as string | undefined;
         const content = req.body.content as string;
         const categoryId = req.body.categoryId as number | undefined;
 
         const response = await client.post.editPost({
           id,
           title,
+          coverImageURL,
           content,
           categoryId,
         });
