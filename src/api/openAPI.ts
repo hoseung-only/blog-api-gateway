@@ -61,7 +61,7 @@ export const openAPISpec: OpenAPIObject = {
     },
     "/categories/{id}": {
       put: {
-        operationId: "editCategory",
+        operationId: "updateCategory",
         parameters: [
           {
             required: true,
@@ -212,8 +212,11 @@ export const openAPISpec: OpenAPIObject = {
                   categoryId: {
                     type: "number",
                   },
+                  summary: {
+                    type: "string",
+                  },
                 },
-                required: ["title", "content"],
+                required: ["title", "content", "summary"],
               },
             },
           },
@@ -259,7 +262,7 @@ export const openAPISpec: OpenAPIObject = {
         },
       },
       put: {
-        operationId: "editPost",
+        operationId: "updatePost",
         parameters: [
           {
             required: true,
@@ -289,8 +292,11 @@ export const openAPISpec: OpenAPIObject = {
                   categoryId: {
                     type: "number",
                   },
+                  summary: {
+                    type: "string",
+                  },
                 },
-                required: ["title", "content"],
+                required: ["title", "content", "summary"],
               },
             },
           },
@@ -457,6 +463,9 @@ export const openAPISpec: OpenAPIObject = {
           createdAt: {
             type: "number",
           },
+          summary: {
+            type: "string"
+          }
         },
         required: [
           "id",
@@ -465,6 +474,7 @@ export const openAPISpec: OpenAPIObject = {
           "content",
           "categoryId",
           "createdAt",
+          "summary"
         ],
       },
       PostListShow: {

@@ -66,7 +66,7 @@ export function applyCategoryRouters(rootRouter: Router) {
         const name = req.body.name as string;
         const parentId = req.body.parentId as number | undefined;
 
-        const response = await client.post.editCategory({ id, name, parentId });
+        const response = await client.post.updateCategory({ id, name, parentId });
 
         return res.status(response.statusCode).json(response.body);
       } catch (error) {
