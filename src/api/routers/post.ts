@@ -11,13 +11,19 @@ export function applyPostRouters(rootRouter: Router) {
 
   router.get(
     "/",
+    query("count")
+      .isNumeric()
+      .withMessage("count must be number")
+      .exists()
+      .withMessage("count must be provided"),
     query("cursor").isNumeric().withMessage("cursor must be number").optional(),
     validateParameters,
     async (req, res, next) => {
       try {
+        const count = Number(req.query.count);
         const cursor = req.query.cursor ? Number(req.query.cursor) : 0;
 
-        const response = await client.post.getPostsByCursor({ cursor });
+        const response = await client.post.getPostsByCursor({ count, cursor });
 
         return res.status(response.statusCode).json(response.body);
       } catch (error) {
@@ -136,7 +142,7 @@ export function applyPostRouters(rootRouter: Router) {
           coverImageURL,
           content,
           categoryId,
-          summary
+          summary,
         });
 
         return res.status(response.statusCode).json(response.body);

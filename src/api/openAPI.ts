@@ -170,6 +170,14 @@ export const openAPISpec: OpenAPIObject = {
         operationId: "getPostsByCursor",
         parameters: [
           {
+            required: true,
+            name: "count",
+            in: "query",
+            schema: {
+              type: "number",
+            },
+          },
+          {
             required: false,
             name: "cursor",
             in: "query",
@@ -464,8 +472,8 @@ export const openAPISpec: OpenAPIObject = {
             type: "number",
           },
           summary: {
-            type: "string"
-          }
+            type: "string",
+          },
         },
         required: [
           "id",
@@ -474,7 +482,7 @@ export const openAPISpec: OpenAPIObject = {
           "content",
           "categoryId",
           "createdAt",
-          "summary"
+          "summary",
         ],
       },
       PostListShow: {
