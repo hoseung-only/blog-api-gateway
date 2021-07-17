@@ -13,11 +13,7 @@ export function applySessionRouters(rootRouter: Router) {
 
   router.post(
     "/",
-    body("email")
-      .isString()
-      .withMessage("email must be string")
-      .exists()
-      .withMessage("email must be provided"),
+    body("email").isString().withMessage("email must be string").exists().withMessage("email must be provided"),
     body("password")
       .isString()
       .withMessage("password must be string")

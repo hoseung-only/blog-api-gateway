@@ -12,15 +12,8 @@ export function applyCategoryRouters(rootRouter: Router) {
   router.post(
     "/",
     authenticate,
-    body("name")
-      .isString()
-      .withMessage("name must be string")
-      .exists()
-      .withMessage("name must be provided"),
-    body("parentId")
-      .isNumeric()
-      .withMessage("parentId must be number")
-      .optional(),
+    body("name").isString().withMessage("name must be string").exists().withMessage("name must be provided"),
+    body("parentId").isNumeric().withMessage("parentId must be number").optional(),
     validateParameters,
     async (req, res, next) => {
       try {
@@ -50,15 +43,8 @@ export function applyCategoryRouters(rootRouter: Router) {
     "/:id",
     authenticate,
     param("id").isNumeric().withMessage("id must be number"),
-    body("name")
-      .isString()
-      .withMessage("name must be string")
-      .exists()
-      .withMessage("name must be provided"),
-    body("parentId")
-      .isNumeric()
-      .withMessage("parentId must be number")
-      .optional(),
+    body("name").isString().withMessage("name must be string").exists().withMessage("name must be provided"),
+    body("parentId").isNumeric().withMessage("parentId must be number").optional(),
     validateParameters,
     async (req, res, next) => {
       try {

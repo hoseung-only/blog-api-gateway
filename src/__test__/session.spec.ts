@@ -27,19 +27,13 @@ describe("Session Routers", () => {
 
     context("when admin requests with invalid email", () => {
       it("should return 401", async () => {
-        return request(app)
-          .post("/sessions")
-          .send({ email: "invalid", password })
-          .expect(401);
+        return request(app).post("/sessions").send({ email: "invalid", password }).expect(401);
       });
     });
 
     context("when admin requests with invalid password", () => {
       it("should return 401", async () => {
-        return request(app)
-          .post("/sessions")
-          .send({ email, password: "invalid" })
-          .expect(401);
+        return request(app).post("/sessions").send({ email, password: "invalid" }).expect(401);
       });
     });
   });

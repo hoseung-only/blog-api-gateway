@@ -13,16 +13,7 @@ export class AuthService {
     }
   }
 
-  public static verifyAccount({
-    email,
-    password,
-  }: {
-    email: string;
-    password: string;
-  }) {
-    return (
-      email === process.env.ADMIN_EMAIL! &&
-      password === process.env.ADMIN_PASSWORD!
-    );
+  public static verifyAccount({ email, password }: { email: string; password: string }) {
+    return email === process.env.ADMIN_EMAIL! && password === process.env.ADMIN_PASSWORD!;
   }
 }

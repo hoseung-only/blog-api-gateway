@@ -15,10 +15,7 @@ export class App {
         res.setHeader("Access-Control-Allow-Origin", req.headers.origin);
       }
       res.setHeader("Access-Control-Allow-Methods", "*");
-      res.setHeader(
-        "Access-Control-Allow-Headers",
-        ["Content-Type", "x-blog-auth-token"].join(", ")
-      );
+      res.setHeader("Access-Control-Allow-Headers", ["Content-Type", "x-blog-auth-token"].join(", "));
       next();
     });
 

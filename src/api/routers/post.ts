@@ -11,11 +11,7 @@ export function applyPostRouters(rootRouter: Router) {
 
   router.get(
     "/",
-    query("count")
-      .isNumeric()
-      .withMessage("count must be number")
-      .exists()
-      .withMessage("count must be provided"),
+    query("count").isNumeric().withMessage("count must be number").exists().withMessage("count must be provided"),
     query("cursor").isNumeric().withMessage("cursor must be number").optional(),
     validateParameters,
     async (req, res, next) => {
@@ -52,29 +48,11 @@ export function applyPostRouters(rootRouter: Router) {
   router.post(
     "/",
     authenticate,
-    body("title")
-      .isString()
-      .withMessage("title must be string")
-      .exists()
-      .withMessage("title must be provided"),
-    body("coverImageURL")
-      .isNumeric()
-      .withMessage("coverImageURL must be string")
-      .optional(),
-    body("content")
-      .isString()
-      .withMessage("content must be string")
-      .exists()
-      .withMessage("content must be provided"),
-    body("categoryId")
-      .isNumeric()
-      .withMessage("categoryId must be number")
-      .optional(),
-    body("summary")
-      .isString()
-      .withMessage("summary must be string")
-      .exists()
-      .withMessage("summary must be provided"),
+    body("title").isString().withMessage("title must be string").exists().withMessage("title must be provided"),
+    body("coverImageURL").isNumeric().withMessage("coverImageURL must be string").optional(),
+    body("content").isString().withMessage("content must be string").exists().withMessage("content must be provided"),
+    body("categoryId").isNumeric().withMessage("categoryId must be number").optional(),
+    body("summary").isString().withMessage("summary must be string").exists().withMessage("summary must be provided"),
     validateParameters,
     async (req, res, next) => {
       try {
@@ -103,29 +81,11 @@ export function applyPostRouters(rootRouter: Router) {
     "/:id",
     authenticate,
     param("id").isNumeric().withMessage("categoryId must be number"),
-    body("title")
-      .isString()
-      .withMessage("title must be string")
-      .exists()
-      .withMessage("title must be provided"),
-    body("coverImageURL")
-      .isNumeric()
-      .withMessage("coverImageURL must be string")
-      .optional(),
-    body("content")
-      .isString()
-      .withMessage("content must be string")
-      .exists()
-      .withMessage("title must be provided"),
-    body("categoryId")
-      .isNumeric()
-      .withMessage("categoryId must be number")
-      .optional(),
-    body("summary")
-      .isString()
-      .withMessage("summary must be string")
-      .exists()
-      .withMessage("summary must be provided"),
+    body("title").isString().withMessage("title must be string").exists().withMessage("title must be provided"),
+    body("coverImageURL").isNumeric().withMessage("coverImageURL must be string").optional(),
+    body("content").isString().withMessage("content must be string").exists().withMessage("title must be provided"),
+    body("categoryId").isNumeric().withMessage("categoryId must be number").optional(),
+    body("summary").isString().withMessage("summary must be string").exists().withMessage("summary must be provided"),
     validateParameters,
     async (req, res, next) => {
       try {

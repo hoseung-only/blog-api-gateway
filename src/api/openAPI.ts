@@ -475,15 +475,7 @@ export const openAPISpec: OpenAPIObject = {
             type: "string",
           },
         },
-        required: [
-          "id",
-          "title",
-          "coverImageURL",
-          "content",
-          "categoryId",
-          "createdAt",
-          "summary",
-        ],
+        required: ["id", "title", "coverImageURL", "content", "categoryId", "createdAt", "summary"],
       },
       PostListShow: {
         type: "object",
