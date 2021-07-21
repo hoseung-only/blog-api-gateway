@@ -384,6 +384,41 @@ export const openAPISpec: OpenAPIObject = {
         },
       },
     },
+    "/image/presigned_post": {
+      get: {
+        operationId: "getPresignedPost",
+        parameters: [
+          {
+            required: true,
+            name: "fileName",
+            in: "query",
+            schema: {
+              type: "string",
+            },
+          },
+          {
+            required: true,
+            name: "fileType",
+            in: "query",
+            schema: {
+              type: "string",
+            },
+          },
+        ],
+        responses: {
+          200: {
+            description: "success",
+            content: {
+              "application/json": {
+                schema: {
+                  $ref: "#/components/schemas/PresignedPostShow",
+                },
+              },
+            },
+          },
+        },
+      },
+    },
   },
   components: {
     schemas: {
@@ -501,6 +536,21 @@ export const openAPISpec: OpenAPIObject = {
           },
         },
         required: ["token"],
+      },
+      PresignedPostShow: {
+        type: "object",
+        properties: {
+          url: {
+            type: "string",
+          },
+          fields: {
+            type: "object",
+            additionalProperties: {
+              type: "string",
+            },
+          },
+        },
+        required: ["url", "fields"],
       },
     },
   },
