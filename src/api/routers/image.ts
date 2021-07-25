@@ -3,6 +3,7 @@ import { query } from "express-validator";
 
 import { client } from "@hoseung-only/blog-microservice-sdk";
 
+import { authenticate } from "../middlewares/authenticate";
 import { validateParameters } from "../middlewares/validateParameters";
 
 export const applyImageRouters = (rootRouter: Router) => {
@@ -10,6 +11,7 @@ export const applyImageRouters = (rootRouter: Router) => {
 
   router.get(
     "/presigned_post",
+    authenticate,
     query("fileName").isString().exists(),
     query("fileType").isString().exists(),
     validateParameters,
