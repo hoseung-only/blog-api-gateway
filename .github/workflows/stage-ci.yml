@@ -1,0 +1,22 @@
+name: Stage
+
+on:
+  push:
+    branches:
+      - '*'
+      - '!master'
+
+jobs:
+  job:
+    runs-on: ubuntu-latest
+    container: node:12
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install NPM Dependencies
+        run: |
+          echo @hoseung-only:registry=https://npm.pkg.github.com/ > .npmrc
+          echo //npm.pkg.github.com/:_authToken=${{ secrets.NPM_TOKEN }} >> .npmrc
+          npm ci
+
+      - name: Test
+        run: npm run test
