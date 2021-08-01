@@ -384,7 +384,7 @@ export const openAPISpec: OpenAPIObject = {
         },
       },
     },
-    "/image/presigned_post": {
+    "/images/presigned_post": {
       get: {
         operationId: "getPresignedPost",
         parameters: [

@@ -29,5 +29,5 @@ export const applyImageRouters = (rootRouter: Router) => {
     }
   );
 
-  rootRouter.use("/image", router);
+  rootRouter.use("/images", router);
 };
