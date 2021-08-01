@@ -130,5 +130,27 @@ export function applyPostRouters(rootRouter: Router) {
     }
   );
 
+  router.get(
+    "/:id/images/presigned_post",
+    authenticate,
+    param("id").isString().exists(),
+    query("fileName").isString().exists(),
+    query("fileType").isString().exists(),
+    validateParameters,
+    async (req, res, next) => {
+      try {
+        const postId = req.params.id as string;
+        const fileName = req.query.fileName as string;
+        const fileType = req.query.fileType as string;
+
+        const response = await client.media.getPresignedPostForPostIamge({ postId, fileName, fileType });
+
+        return res.status(response.statusCode).json(response.body);
+      } catch (error) {
+        return next(error);
+      }
+    }
+  );
+
   rootRouter.use("/posts", router);
 }
