@@ -348,49 +348,6 @@ export const openAPISpec: OpenAPIObject = {
         },
       },
     },
-    "/posts/{id}/images/presigned_post": {
-      get: {
-        operationId: "getPresignedPostForPostIamge",
-        parameters: [
-          {
-            required: true,
-            name: "id",
-            in: "path",
-            schema: {
-              type: "string",
-            },
-          },
-          {
-            required: true,
-            name: "fileName",
-            in: "query",
-            schema: {
-              type: "string",
-            },
-          },
-          {
-            required: true,
-            name: "fileType",
-            in: "query",
-            schema: {
-              type: "string",
-            },
-          },
-        ],
-        responses: {
-          200: {
-            description: "success",
-            content: {
-              "application/json": {
-                schema: {
-                  $ref: "#/components/schemas/PresignedPostShow",
-                },
-              },
-            },
-          },
-        },
-      },
-    },
     "/sessions": {
       post: {
         operationId: "createSession",
@@ -420,6 +377,41 @@ export const openAPISpec: OpenAPIObject = {
               "application/json": {
                 schema: {
                   $ref: "#/components/schemas/SessionShow",
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+    "/images/presigned_post": {
+      get: {
+        operationId: "getPresignedPost",
+        parameters: [
+          {
+            required: true,
+            name: "fileName",
+            in: "query",
+            schema: {
+              type: "string",
+            },
+          },
+          {
+            required: true,
+            name: "fileType",
+            in: "query",
+            schema: {
+              type: "string",
+            },
+          },
+        ],
+        responses: {
+          200: {
+            description: "success",
+            content: {
+              "application/json": {
+                schema: {
+                  $ref: "#/components/schemas/PresignedPostShow",
                 },
               },
             },
