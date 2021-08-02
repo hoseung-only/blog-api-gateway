@@ -82,7 +82,7 @@ export function applyPostRouters(rootRouter: Router) {
     authenticate,
     param("id").isNumeric().withMessage("categoryId must be number"),
     body("title").isString().withMessage("title must be string").exists().withMessage("title must be provided"),
-    body("coverImageURL").isNumeric().withMessage("coverImageURL must be string").optional(),
+    body("coverImageURL").isString().withMessage("coverImageURL must be string").optional(),
     body("content").isString().withMessage("content must be string").exists().withMessage("title must be provided"),
     body("categoryId").isNumeric().withMessage("categoryId must be number").optional(),
     body("summary").isString().withMessage("summary must be string").exists().withMessage("summary must be provided"),
