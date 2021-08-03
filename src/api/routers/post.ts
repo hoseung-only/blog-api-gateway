@@ -49,7 +49,11 @@ export function applyPostRouters(rootRouter: Router) {
     "/",
     authenticate,
     body("title").isString().withMessage("title must be string").exists().withMessage("title must be provided"),
-    body("coverImageURL").isNumeric().withMessage("coverImageURL must be string").optional(),
+    body("coverImageURL")
+      .isString()
+      .withMessage("coverImageURL must be string")
+      .exists()
+      .withMessage("coverImageURL must be provided"),
     body("content").isString().withMessage("content must be string").exists().withMessage("content must be provided"),
     body("categoryId").isNumeric().withMessage("categoryId must be number").optional(),
     body("summary").isString().withMessage("summary must be string").exists().withMessage("summary must be provided"),
@@ -57,7 +61,7 @@ export function applyPostRouters(rootRouter: Router) {
     async (req, res, next) => {
       try {
         const title = req.body.title as string;
-        const coverImageURL = req.body.coverImageURL as string | undefined;
+        const coverImageURL = req.body.coverImageURL as string;
         const content = req.body.content as string;
         const categoryId = req.body.categoryId as number | undefined;
         const summary = req.body.summary as string;
@@ -82,7 +86,11 @@ export function applyPostRouters(rootRouter: Router) {
     authenticate,
     param("id").isNumeric().withMessage("categoryId must be number"),
     body("title").isString().withMessage("title must be string").exists().withMessage("title must be provided"),
-    body("coverImageURL").isString().withMessage("coverImageURL must be string").optional(),
+    body("coverImageURL")
+      .isString()
+      .withMessage("coverImageURL must be string")
+      .exists()
+      .withMessage("coverImageURL must be provided"),
     body("content").isString().withMessage("content must be string").exists().withMessage("title must be provided"),
     body("categoryId").isNumeric().withMessage("categoryId must be number").optional(),
     body("summary").isString().withMessage("summary must be string").exists().withMessage("summary must be provided"),
@@ -91,7 +99,7 @@ export function applyPostRouters(rootRouter: Router) {
       try {
         const id = Number(req.params.id);
         const title = req.body.title as string;
-        const coverImageURL = req.body.coverImageURL as string | undefined;
+        const coverImageURL = req.body.coverImageURL as string;
         const content = req.body.content as string;
         const categoryId = req.body.categoryId as number | undefined;
         const summary = req.body.summary as string;

@@ -224,7 +224,7 @@ export const openAPISpec: OpenAPIObject = {
                     type: "string",
                   },
                 },
-                required: ["title", "content", "summary"],
+                required: ["title", "coverImageURL", "content", "summary"],
               },
             },
           },
@@ -304,7 +304,7 @@ export const openAPISpec: OpenAPIObject = {
                     type: "string",
                   },
                 },
-                required: ["title", "content", "summary"],
+                required: ["title", "coverImageURL", "content", "summary"],
               },
             },
           },
@@ -494,7 +494,6 @@ export const openAPISpec: OpenAPIObject = {
           },
           coverImageURL: {
             type: "string",
-            nullable: true,
           },
           content: {
             type: "string",
