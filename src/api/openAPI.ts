@@ -37,7 +37,7 @@ export const openAPISpec: OpenAPIObject = {
                     type: "string",
                   },
                   parentId: {
-                    type: "number",
+                    type: "string",
                   },
                 },
                 required: ["name"],
@@ -68,7 +68,7 @@ export const openAPISpec: OpenAPIObject = {
             name: "id",
             in: "path",
             schema: {
-              type: "number",
+              type: "string",
             },
           },
         ],
@@ -83,7 +83,7 @@ export const openAPISpec: OpenAPIObject = {
                     type: "string",
                   },
                   parentId: {
-                    type: "number",
+                    type: "string",
                   },
                 },
                 required: ["name"],
@@ -112,7 +112,7 @@ export const openAPISpec: OpenAPIObject = {
             name: "id",
             in: "path",
             schema: {
-              type: "number",
+              type: "string",
             },
           },
         ],
@@ -138,6 +138,14 @@ export const openAPISpec: OpenAPIObject = {
             required: true,
             name: "id",
             in: "path",
+            schema: {
+              type: "string",
+            },
+          },
+          {
+            required: true,
+            name: "count",
+            in: "query",
             schema: {
               type: "number",
             },
@@ -218,7 +226,7 @@ export const openAPISpec: OpenAPIObject = {
                     type: "string",
                   },
                   categoryId: {
-                    type: "number",
+                    type: "string",
                   },
                   summary: {
                     type: "string",
@@ -252,7 +260,7 @@ export const openAPISpec: OpenAPIObject = {
             name: "id",
             in: "path",
             schema: {
-              type: "number",
+              type: "string",
             },
           },
         ],
@@ -277,7 +285,7 @@ export const openAPISpec: OpenAPIObject = {
             name: "id",
             in: "path",
             schema: {
-              type: "number",
+              type: "string",
             },
           },
         ],
@@ -298,7 +306,7 @@ export const openAPISpec: OpenAPIObject = {
                     type: "string",
                   },
                   categoryId: {
-                    type: "number",
+                    type: "string",
                   },
                   summary: {
                     type: "string",
@@ -330,7 +338,7 @@ export const openAPISpec: OpenAPIObject = {
             name: "id",
             in: "path",
             schema: {
-              type: "number",
+              type: "string",
             },
           },
         ],
@@ -426,13 +434,13 @@ export const openAPISpec: OpenAPIObject = {
         type: "object",
         properties: {
           id: {
-            type: "number",
+            type: "string",
           },
           name: {
             type: "string",
           },
           parentId: {
-            type: "number",
+            type: "string",
             nullable: true,
           },
         },
@@ -447,7 +455,7 @@ export const openAPISpec: OpenAPIObject = {
               type: "object",
               properties: {
                 id: {
-                  type: "number",
+                  type: "string",
                 },
                 name: {
                   type: "string",
@@ -458,7 +466,7 @@ export const openAPISpec: OpenAPIObject = {
                     type: "object",
                     properties: {
                       id: {
-                        type: "number",
+                        type: "string",
                       },
                       name: {
                         type: "string",
@@ -487,7 +495,7 @@ export const openAPISpec: OpenAPIObject = {
         type: "object",
         properties: {
           id: {
-            type: "number",
+            type: "string",
           },
           title: {
             type: "string",
@@ -499,7 +507,7 @@ export const openAPISpec: OpenAPIObject = {
             type: "string",
           },
           categoryId: {
-            type: "number",
+            type: "string",
             nullable: true,
           },
           createdAt: {
