@@ -45,6 +45,23 @@ export function applyPostRouters(rootRouter: Router) {
     }
   );
 
+  router.patch(
+    "/:id/view_count",
+    param("id").isString().withMessage("id must be string"),
+    validateParameters,
+    async (req, res, next) => {
+      try {
+        const id = req.params.id as string;
+
+        const response = await client.post.increaseViewCount({ id });
+
+        return res.status(response.statusCode).json(response.body);
+      } catch (error) {
+        return next(error);
+      }
+    }
+  );
+
   router.post(
     "/",
     authenticate,
