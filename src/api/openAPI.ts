@@ -527,6 +527,9 @@ export const openAPISpec: OpenAPIObject = {
           title: {
             type: "string",
           },
+          viewCount: {
+            type: "number",
+          },
           coverImageURL: {
             type: "string",
           },
@@ -544,7 +547,7 @@ export const openAPISpec: OpenAPIObject = {
             type: "string",
           },
         },
-        required: ["id", "title", "coverImageURL", "content", "categoryId", "createdAt", "summary"],
+        required: ["id", "title", "viewCount", "coverImageURL", "content", "categoryId", "createdAt", "summary"],
       },
       PostListShow: {
         type: "object",
