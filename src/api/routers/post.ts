@@ -52,8 +52,9 @@ export function applyPostRouters(rootRouter: Router) {
     async (req, res, next) => {
       try {
         const id = req.params.id as string;
+        const forwarded = req.headers["x-forwarded-for"] as string;
 
-        const response = await client.post.increaseViewCount({ id });
+        const response = await client.post.increaseViewCount({ id, forwarded });
 
         return res.status(response.statusCode).json(response.body);
       } catch (error) {
