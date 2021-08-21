@@ -8,8 +8,8 @@ export class App {
   constructor() {
     this.app = express();
 
+    this.app.set("trust proxy", true);
     this.app.use(express.json());
-
     this.app.use((req, res, next) => {
       if (req.headers.origin) {
         res.setHeader("Access-Control-Allow-Origin", req.headers.origin);
