@@ -39,6 +39,23 @@ export function applyCategoryRouters(rootRouter: Router) {
     }
   });
 
+  router.get(
+    "/:id",
+    param("id").isString().withMessage("id must be string"),
+    validateParameters,
+    async (req, res, next) => {
+      try {
+        const id = req.params.id;
+
+        const response = await client.post.getCategoryById({ id });
+
+        return res.status(response.statusCode).json(response.body);
+      } catch (error) {
+        return next(error);
+      }
+    }
+  );
+
   router.put(
     "/:id",
     authenticate,

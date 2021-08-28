@@ -60,6 +60,31 @@ export const openAPISpec: OpenAPIObject = {
       },
     },
     "/categories/{id}": {
+      get: {
+        operationId: "getCategory",
+        parameters: [
+          {
+            required: true,
+            name: "id",
+            in: "path",
+            schema: {
+              type: "string",
+            },
+          },
+        ],
+        responses: {
+          200: {
+            description: "success",
+            content: {
+              "application/json": {
+                schema: {
+                  $ref: "#/components/schemas/CategoryShow",
+                },
+              },
+            },
+          },
+        },
+      },
       put: {
         operationId: "updateCategory",
         parameters: [
