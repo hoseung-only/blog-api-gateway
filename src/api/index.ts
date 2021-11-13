@@ -5,6 +5,7 @@ import { applyPostRouters } from "./routers/post";
 import { applyCategoryRouters } from "./routers/category";
 import { applySessionRouters } from "./routers/session";
 import { applyImageRouters } from "./routers/image";
+import { applyStaticRouters } from "./routers/static";
 import { applyErrorHandlers } from "./errorHandlers";
 
 export function applyAllRouters(app: Application) {
@@ -15,6 +16,7 @@ export function applyAllRouters(app: Application) {
   applyCategoryRouters(router);
   applySessionRouters(router);
   applyImageRouters(router);
+  applyStaticRouters(router);
   applyErrorHandlers(router);
 
   app.use("/", router);
