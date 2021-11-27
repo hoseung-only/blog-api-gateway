@@ -48,13 +48,14 @@ export function applyPostRouters(rootRouter: Router) {
   router.patch(
     "/:id/view_count",
     param("id").isString().withMessage("id must be string"),
+    query("userId").isString().withMessage("userId must be string"),
     validateParameters,
     async (req, res, next) => {
       try {
         const id = req.params.id as string;
-        const forwarded = req.headers["x-forwarded-for"] as string;
+        const userId = req.query.userId as string;
 
-        const response = await client.post.increaseViewCount({ id, forwarded });
+        const response = await client.post.increaseViewCount({ id, userId });
 
         return res.status(response.statusCode).json(response.body);
       } catch (error) {

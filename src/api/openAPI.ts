@@ -393,6 +393,14 @@ export const openAPISpec: OpenAPIObject = {
               type: "string",
             },
           },
+          {
+            required: true,
+            name: "userId",
+            in: "query",
+            schema: {
+              type: "string",
+            },
+          },
         ],
         responses: {
           200: {
