@@ -487,6 +487,49 @@ export const openAPISpec: OpenAPIObject = {
         },
       },
     },
+    "/search/posts": {
+      get: {
+        operationId: "searchPosts",
+        parameters: [
+          {
+            required: true,
+            name: "query",
+            in: "query",
+            schema: {
+              type: "string",
+            },
+          },
+          {
+            required: true,
+            name: "count",
+            in: "query",
+            schema: {
+              type: "number",
+            },
+          },
+          {
+            required: false,
+            name: "cursor",
+            in: "query",
+            schema: {
+              type: "number",
+            },
+          },
+        ],
+        responses: {
+          200: {
+            description: "success",
+            content: {
+              "application/json": {
+                schema: {
+                  $ref: "#/components/schemas/PostListShow",
+                },
+              },
+            },
+          },
+        },
+      },
+    },
   },
   components: {
     schemas: {
