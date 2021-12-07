@@ -9,7 +9,7 @@ export function applySearchRouters(rootRouter: Router) {
   const router = Router();
 
   router.get(
-    "/",
+    "/posts",
     query("query").exists().withMessage("query must be provided"),
     query("count").isNumeric().withMessage("count must be number").exists().withMessage("count must be provided"),
     query("cursor").isNumeric().withMessage("cursor must be number").optional(),
