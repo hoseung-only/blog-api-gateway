@@ -20,7 +20,7 @@ export function applySearchRouters(rootRouter: Router) {
         const count = Number(req.query.count);
         const cursor = req.query.cursor ? Number(req.query.cursor) : 0;
 
-        const response = await client.post.searchPost({ query, count, cursor });
+        const response = await client.post.searchPosts({ query, count, cursor });
 
         return res.status(response.statusCode).json(response.body);
       } catch (error) {
