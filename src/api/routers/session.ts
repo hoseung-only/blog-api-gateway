@@ -1,44 +1,24 @@
-import { Router } from "express";
-import { body } from "express-validator";
+import { Switch, Route, Parameter, Schema, ErrorResponse } from "typed-express";
 
-import { validateParameters } from "../middlewares/validateParameters";
+import * as Entities from "../entities";
+import * as Presenters from "../presenters";
 
 import { AuthService } from "../../services/auth";
 
-import * as Presenters from "../presenters";
-import { ErrorResponse } from "../../utils/error";
-
-export function applySessionRouters(rootRouter: Router) {
-  const router = Router();
-
-  router.post(
+export const SessionRouter = new Switch("/sessions", [
+  Route.POST(
     "/",
-    body("email").isString().withMessage("email must be string").exists().withMessage("email must be provided"),
-    body("password")
-      .isString()
-      .withMessage("password must be string")
-      .exists()
-      .withMessage("password must be provided"),
-    validateParameters,
-    async (req, res, next) => {
-      try {
-        const email = req.body.email as string;
-        const password = req.body.password as string;
-
-        const isValidAccount = AuthService.verifyAccount({ email, password });
-
-        if (!isValidAccount) {
-          throw new ErrorResponse(401, "invalid account");
-        }
-
-        const token = AuthService.createJWT();
-
-        return res.status(201).json(Presenters.presentSession({ token }));
-      } catch (error) {
-        return next(error);
+    "createSession",
+    { email: Parameter.Body(Schema.String()), password: Parameter.Body(Schema.String()) },
+    Entities.SessionShow,
+    async (req, res) => {
+      const { email, password } = req.body;
+      const isValidAccount = AuthService.verifyAccount({ email, password });
+      if (!isValidAccount) {
+        throw new ErrorResponse(401, "invalid account");
       }
+      const token = AuthService.createJWT();
+      return res.status(201).json(Presenters.presentSession({ token }));
     }
-  );
-
-  rootRouter.use("/sessions", router);
-}
+  ),
+]);

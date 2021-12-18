@@ -1,129 +1,98 @@
-import { Router } from "express";
-import { body, param, query } from "express-validator";
+import { Switch, Route, Parameter, Schema } from "typed-express";
 
 import { client } from "@hoseung-only/blog-microservice-sdk";
 
+import * as Entities from "../entities";
+
 import { authenticate } from "../middlewares/authenticate";
-import { validateParameters } from "../middlewares/validateParameters";
 
-export function applyCategoryRouters(rootRouter: Router) {
-  const router = Router();
-
-  router.post(
+export const CategoryRouter = new Switch("/categories", [
+  Route.POST(
     "/",
-    authenticate,
-    body("name").isString().withMessage("name must be string").exists().withMessage("name must be provided"),
-    body("parentId").isString().withMessage("parentId must be string").optional(),
-    validateParameters,
-    async (req, res, next) => {
-      try {
-        const name = req.body.name as string;
-        const parentId = req.body.parentId as string | undefined;
-
-        const response = await client.post.createCategory({ name, parentId });
-
-        return res.status(response.statusCode).json(response.body);
-      } catch (error) {
-        return next(error);
-      }
-    }
-  );
-
-  router.get("/", async (req, res, next) => {
-    try {
-      const response = await client.post.getAllCategories();
-
+    "createCategory",
+    {
+      name: Parameter.Body(Schema.String()),
+      parentId: Parameter.Body(Schema.Optional(Schema.String())),
+    },
+    Entities.Category,
+    async (req, res) => {
+      const { name, parentId } = req.body;
+      const response = await client.post.createCategory({ name, parentId });
       return res.status(response.statusCode).json(response.body);
-    } catch (error) {
-      return next(error);
+    },
+    { middlewares: [authenticate] }
+  ),
+
+  Route.GET("/", "getAllCategories", {}, Entities.AllCategoriesShow, async (req, res) => {
+    const response = await client.post.getAllCategories();
+    return res.status(response.statusCode).json(response.body);
+  }),
+
+  Route.GET(
+    "/{id}",
+    "getCategoryById",
+    { id: Parameter.Path(Schema.String()) },
+    Entities.Category,
+    async (req, res) => {
+      const { id } = req.params;
+      const response = await client.post.getCategoryById({ id });
+      return res.status(response.statusCode).json(response.body);
     }
-  });
+  ),
 
-  router.get(
-    "/:id",
-    param("id").isString().withMessage("id must be string"),
-    validateParameters,
-    async (req, res, next) => {
-      try {
-        const id = req.params.id;
+  Route.PUT(
+    "/{id}",
+    "updateCategory",
+    {
+      id: Parameter.Path(Schema.String()),
+      name: Parameter.Body(Schema.String()),
+      parentId: Parameter.Body(Schema.Optional(Schema.String())),
+    },
+    Entities.Category,
+    async (req, res) => {
+      const { id } = req.params;
+      const { name, parentId } = req.body;
+      const response = await client.post.updateCategory({
+        id,
+        name,
+        parentId,
+      });
+      return res.status(response.statusCode).json(response.body);
+    },
+    { middlewares: [authenticate] }
+  ),
 
-        const response = await client.post.getCategoryById({ id });
-
-        return res.status(response.statusCode).json(response.body);
-      } catch (error) {
-        return next(error);
-      }
+  Route.GET(
+    "/{id}/posts",
+    "getCategoryPostsByCursor",
+    {
+      id: Parameter.Path(Schema.String()),
+      count: Parameter.Query(Schema.Number()),
+      cursor: Parameter.Query(Schema.Optional(Schema.Number())),
+    },
+    Entities.PostListShow,
+    async (req, res) => {
+      const { id } = req.params;
+      const { count, cursor = 0 } = req.query;
+      const response = await client.post.getCategoryPostsByCursor({
+        categoryId: id,
+        count,
+        cursor,
+      });
+      return res.status(response.statusCode).json(response.body);
     }
-  );
+  ),
 
-  router.put(
-    "/:id",
-    authenticate,
-    param("id").isString().withMessage("id must be string"),
-    body("name").isString().withMessage("name must be string").exists().withMessage("name must be provided"),
-    body("parentId").isString().withMessage("parentId must be string").optional(),
-    validateParameters,
-    async (req, res, next) => {
-      try {
-        const id = req.params.id as string;
-        const name = req.body.name as string;
-        const parentId = req.body.parentId as string | undefined;
-
-        const response = await client.post.updateCategory({
-          id,
-          name,
-          parentId,
-        });
-
-        return res.status(response.statusCode).json(response.body);
-      } catch (error) {
-        return next(error);
-      }
-    }
-  );
-
-  router.get(
-    "/:id/posts",
-    param("id").isString().withMessage("id must be string"),
-    query("count").isNumeric().withMessage("count must be number").exists().withMessage("count must be provided"),
-    query("cursor").isNumeric().withMessage("cursor must be string").optional(),
-    validateParameters,
-    async (req, res, next) => {
-      try {
-        const categoryId = req.params.id as string;
-        const count = Number(req.query.count);
-        const cursor = req.query.cursor ? Number(req.query.cursor) : 0;
-
-        const response = await client.post.getCategoryPostsByCursor({
-          categoryId,
-          count,
-          cursor,
-        });
-
-        return res.status(response.statusCode).json(response.body);
-      } catch (error) {
-        return next(error);
-      }
-    }
-  );
-
-  router.delete(
-    "/:id",
-    authenticate,
-    param("id").isString().withMessage("id must be string"),
-    validateParameters,
-    async (req, res, next) => {
-      try {
-        const id = req.params.id as string;
-
-        const response = await client.post.deleteCategoryById({ id });
-
-        return res.status(response.statusCode).json(response.body);
-      } catch (error) {
-        return next(error);
-      }
-    }
-  );
-
-  rootRouter.use("/categories", router);
-}
+  Route.DELETE(
+    "/{id}",
+    "deleteCategoryById",
+    { id: Parameter.Path(Schema.String()) },
+    Entities.SuccessShow,
+    async (req, res) => {
+      const { id } = req.params;
+      const response = await client.post.deleteCategoryById({ id });
+      return res.status(response.statusCode).json(response.body);
+    },
+    { middlewares: [authenticate] }
+  ),
+]);
