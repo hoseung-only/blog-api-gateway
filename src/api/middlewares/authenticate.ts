@@ -1,10 +1,8 @@
-import { RequestHandler } from "express";
+import { Middleware, ErrorResponse } from "typed-express";
 
 import { AuthService } from "../../services/auth";
 
-import { ErrorResponse } from "../../utils/error";
-
-export const authenticate: RequestHandler = (req, res, next) => {
+export const authenticate = new Middleware((req, res, next) => {
   const token = req.headers["x-blog-auth-token"];
 
   if (!token || !AuthService.verifyJWT(token as string)) {
@@ -14,4 +12,4 @@ export const authenticate: RequestHandler = (req, res, next) => {
   }
 
   return next();
-};
+});

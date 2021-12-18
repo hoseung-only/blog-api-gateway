@@ -1,33 +1,23 @@
-import { Router } from "express";
-import { query, param, body } from "express-validator";
+import { Switch, Route, Parameter, Schema } from "typed-express";
 
 import { client } from "@hoseung-only/blog-microservice-sdk";
 
-import { validateParameters } from "../middlewares/validateParameters";
+import * as Entities from "../entities";
 
-export function applySearchRouters(rootRouter: Router) {
-  const router = Router();
-
-  router.get(
-    "/posts",
-    query("query").exists().withMessage("query must be provided"),
-    query("count").isNumeric().withMessage("count must be number").exists().withMessage("count must be provided"),
-    query("cursor").isNumeric().withMessage("cursor must be number").optional(),
-    validateParameters,
-    async (req, res, next) => {
-      try {
-        const query = decodeURIComponent(req.query.query as string);
-        const count = Number(req.query.count);
-        const cursor = req.query.cursor ? Number(req.query.cursor) : 0;
-
-        const response = await client.post.searchPosts({ query, count, cursor });
-
-        return res.status(response.statusCode).json(response.body);
-      } catch (error) {
-        return next(error);
-      }
+export const SearchRouter = new Switch("/search", [
+  Route.GET(
+    "/",
+    "searchPosts",
+    {
+      query: Parameter.Query(Schema.String()),
+      count: Parameter.Query(Schema.Number()),
+      cursor: Parameter.Query(Schema.Optional(Schema.Number())),
+    },
+    Entities.PostListShow,
+    async (req, res) => {
+      const { query, count, cursor } = req.query;
+      const response = await client.post.searchPosts({ query: decodeURIComponent(query), count, cursor });
+      return res.status(response.statusCode).json(response.body);
     }
-  );
-
-  rootRouter.use("/search", router);
-}
+  ),
+]);

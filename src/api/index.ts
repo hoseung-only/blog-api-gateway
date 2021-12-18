@@ -1,25 +1,32 @@
-import { Application, Router } from "express";
+import { Switch, OpenAPIRoute } from "typed-express";
 
-import { applyOpenAPIRouter } from "./openAPI";
-import { applyPostRouters } from "./routers/post";
-import { applyCategoryRouters } from "./routers/category";
-import { applySearchRouters } from "./routers/search";
-import { applySessionRouters } from "./routers/session";
-import { applyImageRouters } from "./routers/image";
-import { applyStaticRouters } from "./routers/static";
-import { applyErrorHandlers } from "./errorHandlers";
+import { PostRouter } from "./routers/post";
+import { CategoryRouter } from "./routers/category";
+import { SearchRouter } from "./routers/search";
+import { SessionRouter } from "./routers/session";
+import { ImageRouter } from "./routers/image";
+import { notFound, errorHandler } from "./errorHandlers";
 
-export function applyAllRouters(app: Application) {
-  const router = Router();
+import * as Entities from "./entities";
 
-  applyOpenAPIRouter(router);
-  applyPostRouters(router);
-  applyCategoryRouters(router);
-  applySearchRouters(router);
-  applySessionRouters(router);
-  applyImageRouters(router);
-  applyStaticRouters(router);
-  applyErrorHandlers(router);
+const AllRouter = new Switch("/", [
+  PostRouter,
+  CategoryRouter,
+  SearchRouter,
+  SessionRouter,
+  ImageRouter,
+  notFound,
+  errorHandler,
+]);
 
-  app.use("/", router);
-}
+const OpenAPI = new OpenAPIRoute(
+  "/openapi",
+  {
+    title: "hoseungJangBlogAPI",
+    version: "1.0.0",
+  },
+  AllRouter,
+  Entities
+);
+
+export const RootRouter = new Switch("/", [OpenAPI, AllRouter]);

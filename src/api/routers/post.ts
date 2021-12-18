@@ -1,161 +1,107 @@
-import { Router } from "express";
-import { query, param, body } from "express-validator";
+import { Switch, Route, Parameter, Schema } from "typed-express";
 
 import { client } from "@hoseung-only/blog-microservice-sdk";
 
+import * as Entities from "../entities";
+
 import { authenticate } from "../middlewares/authenticate";
-import { validateParameters } from "../middlewares/validateParameters";
 
-export function applyPostRouters(rootRouter: Router) {
-  const router = Router();
-
-  router.get(
+export const PostRouter = new Switch("/posts", [
+  Route.GET(
     "/",
-    query("count").isNumeric().withMessage("count must be number").exists().withMessage("count must be provided"),
-    query("cursor").isNumeric().withMessage("cursor must be number").optional(),
-    validateParameters,
-    async (req, res, next) => {
-      try {
-        const count = Number(req.query.count);
-        const cursor = req.query.cursor ? Number(req.query.cursor) : 0;
-
-        const response = await client.post.getPostsByCursor({ count, cursor });
-
-        return res.status(response.statusCode).json(response.body);
-      } catch (error) {
-        return next(error);
-      }
+    "getPostsByCursor",
+    { count: Parameter.Query(Schema.Number()), cursor: Parameter.Query(Schema.Optional(Schema.Number())) },
+    Entities.PostListShow,
+    async (req, res) => {
+      const { count, cursor = 0 } = req.query;
+      const response = await client.post.getPostsByCursor({ count, cursor });
+      return res.status(response.statusCode).json(response.body);
     }
-  );
+  ),
 
-  router.get(
-    "/:id",
-    param("id").isString().withMessage("id must be string"),
-    validateParameters,
-    async (req, res, next) => {
-      try {
-        const id = req.params.id as string;
+  Route.GET("/{id}", "getPost", { id: Parameter.Path(Schema.String()) }, Entities.Post, async (req, res) => {
+    const { id } = req.params;
+    const response = await client.post.getPost({ id });
 
-        const response = await client.post.getPost({ id });
+    return res.status(response.statusCode).json(response.body);
+  }),
 
-        return res.status(response.statusCode).json(response.body);
-      } catch (error) {
-        return next(error);
-      }
+  Route.PATCH(
+    "/{id}/view_count",
+    "increaseViewCount",
+    { id: Parameter.Path(Schema.String()), userId: Parameter.Query(Schema.String()) },
+    Entities.SuccessShow,
+    async (req, res) => {
+      const { id } = req.params;
+      const { userId } = req.query;
+      const response = await client.post.increaseViewCount({ id, userId });
+      return res.status(response.statusCode).json(response.body);
     }
-  );
+  ),
 
-  router.patch(
-    "/:id/view_count",
-    param("id").isString().withMessage("id must be string"),
-    query("userId").isString().withMessage("userId must be string"),
-    validateParameters,
-    async (req, res, next) => {
-      try {
-        const id = req.params.id as string;
-        const userId = req.query.userId as string;
-
-        const response = await client.post.increaseViewCount({ id, userId });
-
-        return res.status(response.statusCode).json(response.body);
-      } catch (error) {
-        return next(error);
-      }
-    }
-  );
-
-  router.post(
+  Route.POST(
     "/",
-    authenticate,
-    body("title").isString().withMessage("title must be string").exists().withMessage("title must be provided"),
-    body("coverImageURL")
-      .isString()
-      .withMessage("coverImageURL must be string")
-      .exists()
-      .withMessage("coverImageURL must be provided"),
-    body("content").isString().withMessage("content must be string").exists().withMessage("content must be provided"),
-    body("categoryId").isString().withMessage("categoryId must be string").optional(),
-    body("summary").isString().withMessage("summary must be string").exists().withMessage("summary must be provided"),
-    validateParameters,
-    async (req, res, next) => {
-      try {
-        const title = req.body.title as string;
-        const coverImageURL = req.body.coverImageURL as string;
-        const content = req.body.content as string;
-        const categoryId = req.body.categoryId as string | undefined;
-        const summary = req.body.summary as string;
+    "createPost",
+    {
+      title: Parameter.Body(Schema.String()),
+      summary: Parameter.Body(Schema.String()),
+      coverImageURL: Parameter.Body(Schema.String()),
+      content: Parameter.Body(Schema.String()),
+      categoryId: Parameter.Body(Schema.Optional(Schema.String())),
+    },
+    Entities.Post,
+    async (req, res) => {
+      const { title, summary, coverImageURL, content, categoryId } = req.body;
+      const response = await client.post.createPost({
+        title,
+        coverImageURL,
+        content,
+        categoryId,
+        summary,
+      });
+      return res.status(response.statusCode).json(response.body);
+    },
+    { middlewares: [authenticate] }
+  ),
 
-        const response = await client.post.createPost({
-          title,
-          coverImageURL,
-          content,
-          categoryId,
-          summary,
-        });
+  Route.PUT(
+    "/{id}",
+    "updatePost",
+    {
+      id: Parameter.Path(Schema.String()),
+      title: Parameter.Body(Schema.String()),
+      summary: Parameter.Body(Schema.String()),
+      coverImageURL: Parameter.Body(Schema.String()),
+      content: Parameter.Body(Schema.String()),
+      categoryId: Parameter.Body(Schema.Optional(Schema.String())),
+    },
+    Entities.Post,
+    async (req, res) => {
+      const { id } = req.params;
+      const { title, summary, coverImageURL, content, categoryId } = req.body;
+      const response = await client.post.updatePost({
+        id,
+        title,
+        coverImageURL,
+        content,
+        categoryId,
+        summary,
+      });
+      return res.status(response.statusCode).json(response.body);
+    },
+    { middlewares: [authenticate] }
+  ),
 
-        return res.status(response.statusCode).json(response.body);
-      } catch (error) {
-        return next(error);
-      }
-    }
-  );
-
-  router.put(
-    "/:id",
-    authenticate,
-    param("id").isString().withMessage("categoryId must be string"),
-    body("title").isString().withMessage("title must be string").exists().withMessage("title must be provided"),
-    body("coverImageURL")
-      .isString()
-      .withMessage("coverImageURL must be string")
-      .exists()
-      .withMessage("coverImageURL must be provided"),
-    body("content").isString().withMessage("content must be string").exists().withMessage("title must be provided"),
-    body("categoryId").isString().withMessage("categoryId must be string").optional(),
-    body("summary").isString().withMessage("summary must be string").exists().withMessage("summary must be provided"),
-    validateParameters,
-    async (req, res, next) => {
-      try {
-        const id = req.params.id as string;
-        const title = req.body.title as string;
-        const coverImageURL = req.body.coverImageURL as string;
-        const content = req.body.content as string;
-        const categoryId = req.body.categoryId as string | undefined;
-        const summary = req.body.summary as string;
-
-        const response = await client.post.updatePost({
-          id,
-          title,
-          coverImageURL,
-          content,
-          categoryId,
-          summary,
-        });
-
-        return res.status(response.statusCode).json(response.body);
-      } catch (error) {
-        return next(error);
-      }
-    }
-  );
-
-  router.delete(
-    "/:id",
-    authenticate,
-    param("id").isString().withMessage("id must be string"),
-    validateParameters,
-    async (req, res, next) => {
-      try {
-        const id = req.params.id as string;
-
-        const response = await client.post.deletePostById({ id });
-
-        return res.status(response.statusCode).json(response.body);
-      } catch (error) {
-        return next(error);
-      }
-    }
-  );
-
-  rootRouter.use("/posts", router);
-}
+  Route.DELETE(
+    "/{id}",
+    "deletePost",
+    { id: Parameter.Path(Schema.String()) },
+    Entities.SuccessShow,
+    async (req, res) => {
+      const { id } = req.params;
+      const response = await client.post.deletePostById({ id });
+      return res.status(response.statusCode).json(response.body);
+    },
+    { middlewares: [authenticate] }
+  ),
+]);
