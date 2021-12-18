@@ -27,7 +27,7 @@ export const PostRouter = new Switch("/posts", [
   }),
 
   Route.PATCH(
-    "/",
+    "/{id}/view_count",
     "increaseViewCount",
     { id: Parameter.Path(Schema.String()), userId: Parameter.Query(Schema.String()) },
     Entities.SuccessShow,
