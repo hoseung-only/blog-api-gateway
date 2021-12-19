@@ -30,7 +30,7 @@ export const CategoryRouter = new Switch("/categories", [
 
   Route.GET(
     "/{id}",
-    "getCategoryById",
+    "getCategory",
     { id: Parameter.Path(Schema.String()) },
     Entities.Category,
     async (req, res) => {

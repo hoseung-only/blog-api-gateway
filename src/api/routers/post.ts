@@ -27,7 +27,7 @@ export const PostRouter = new Switch("/posts", [
 
   Route.PATCH(
     "/{id}/view_count",
-    "increaseViewCount",
+    "increasePostViewCount",
     { id: Parameter.Path(Schema.String()), userId: Parameter.Query(Schema.String()) },
     Entities.SuccessShow,
     async (req, res) => {
@@ -93,7 +93,7 @@ export const PostRouter = new Switch("/posts", [
 
   Route.DELETE(
     "/{id}",
-    "deletePost",
+    "deletePostById",
     { id: Parameter.Path(Schema.String()) },
     Entities.SuccessShow,
     async (req, res) => {
