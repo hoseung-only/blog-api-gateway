@@ -6,7 +6,7 @@ import * as Entities from "../entities";
 
 export const SearchRouter = new Switch("/search", [
   Route.GET(
-    "/",
+    "/posts",
     "searchPosts",
     {
       query: Parameter.Query(Schema.String()),
