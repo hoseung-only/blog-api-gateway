@@ -22,7 +22,6 @@ export const PostRouter = new Switch("/posts", [
   Route.GET("/{id}", "getPost", { id: Parameter.Path(Schema.String()) }, Entities.Post, async (req, res) => {
     const { id } = req.params;
     const response = await client.post.getPost({ id });
-
     return res.status(response.statusCode).json(response.body);
   }),
 
