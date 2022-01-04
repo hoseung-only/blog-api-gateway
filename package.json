@@ -37,7 +37,7 @@
     "jsonwebtoken": "^8.5.1",
     "mysql2": "^2.2.5",
     "reflect-metadata": "^0.1.13",
-    "typed-express": "^1.0.3",
+    "typed-express": "^1.1.0",
     "typeorm": "^0.2.29"
   }
 }
